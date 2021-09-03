@@ -1,6 +1,9 @@
 {
-    "name": "com.{{COMPANY}}.{{REPOSITORY_NAME}}",
-    "references": [],
+    "name": "com.thesolarmoose.ucharts",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c35c6d9084ba1a541868fbd8c50a585a"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

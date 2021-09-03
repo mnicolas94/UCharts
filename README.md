@@ -1,6 +1,6 @@
-# {{FRIENDLY_NAME}}
+# UCharts
 
-{{DESCRIPTION}}
+Small library for plotting data in Unity
 
 ## License
 

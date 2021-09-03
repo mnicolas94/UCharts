@@ -1,7 +1,7 @@
 {
-  "name": "com.{{COMPANY}}.{{REPOSITORY_NAME}}.Editor.Tests",
+  "name": "com.thesolarmoose.ucharts.Tests",
   "references": [
-    "com.{{COMPANY}}.{{REPOSITORY_NAME}}"
+    "Unity.com.thesolarmoose.ucharts"
   ],
   "optionalUnityReferences": [
     "TestAssemblies"

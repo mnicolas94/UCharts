@@ -1,5 +1,5 @@
 {
-    "name": "com.{{COMPANY}}.{{REPOSITORY_NAME}}.Editor",
+    "name": "com.thesolarmoose.ucharts.Editor",
     "references": [],
     "includePlatforms": [
         "Editor"
