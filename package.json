@@ -1,6 +1,6 @@
 {
   "name": "com.thesolarmoose.ucharts",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "displayName": "UCharts",
   "description": "Small library for plotting data in Unity",
   "unity": "2021.1",
