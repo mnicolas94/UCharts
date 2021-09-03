@@ -31,11 +31,19 @@ namespace UCharts.Runtime.Charts.Renderers
                 var points = line.Points;
                 for (int j = 0; j < points.Count - 1; j++)
                 {
-                    var pointA = points[j].RemapBounds(dataBounds, rect);
-                    pointA.y = rect.height - pointA.y;
-                    var pointB = points[j + 1].RemapBounds(dataBounds, rect);
-                    pointB.y = rect.height - pointB.y;
-                    Handles.DrawLine(pointA, pointB);
+                    var pointA = points[j];
+                    var pointB = points[j + 1];
+                    bool aInside = pointA.IsInsideRect(dataBounds);
+                    bool bInside = pointB.IsInsideRect(dataBounds);
+
+                    if (aInside && bInside)
+                    {
+                        pointA = pointA.RemapBounds(dataBounds, rect);
+                        pointA = pointA.MirrorVertically(rect);
+                        pointB = pointB.RemapBounds(dataBounds, rect);
+                        pointB = pointB.MirrorVertically(rect);
+                        Handles.DrawLine(pointA, pointB);
+                    }
                 }
             }
         }
