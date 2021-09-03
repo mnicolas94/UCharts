@@ -33,11 +33,6 @@ namespace UCharts.Runtime.Charts
             
             _backgroundRenderer.RegisterCallback<WheelEvent>(OnWheel);
             _backgroundRenderer.RegisterCallback<MouseMoveEvent>(OnMouseEvent);
-            
-            AddData(ChartSingleData.RandomData(100));
-            AddData(ChartSingleData.RandomData(100, Color.green));
-            AddData(ChartSingleData.RandomData(100));
-            AddData(new ChartSingleData(x => 0.003f*x*x, 0, 99, 1));
         }
 
         private void InitializeRenderers()
