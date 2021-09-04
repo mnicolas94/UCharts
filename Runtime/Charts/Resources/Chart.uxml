@@ -1,12 +1,18 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement style="flex-grow: 5;">
-        <UCharts.Runtime.Charts.Renderers.ScaleRenderer focusable="true" name="HorizontalScale" horizontal="true" style="position: absolute; left: 50px; top: auto; bottom: 0; right: 0; height: 50px;" />
-        <UCharts.Runtime.Charts.Renderers.ScaleRenderer focusable="true" name="VerticalScale" style="bottom: 50px; left: 0; right: auto; top: 0; width: 50px; position: absolute;" />
-        <UCharts.Runtime.Charts.Renderers.ChartBackgroundRenderer focusable="true" name="ChartBackground" style="position: absolute; left: 50px; bottom: 50px; top: 5px; right: 5px;">
-            <ui:VisualElement name="ChartContainer" style="flex-grow: 1;" />
-        </UCharts.Runtime.Charts.Renderers.ChartBackgroundRenderer>
-    </ui:VisualElement>
-    <ui:VisualElement name="LegendContainer" style="flex-grow: 1;">
-        <UCharts.Runtime.Charts.ChartLegend name="ChartLegend" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap; justify-content: space-around; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;" />
+    <ui:VisualElement name="root" style="flex-grow: 1; flex-direction: row;">
+        <ui:VisualElement style="flex-grow: 2;">
+            <ui:VisualElement name="Renderers" style="flex-grow: 5;">
+                <UCharts.Runtime.Charts.Renderers.ScaleRenderer focusable="true" name="HorizontalScale" horizontal="true" style="position: absolute; left: 50px; top: auto; right: 5px; bottom: 0; height: 50px;" />
+                <UCharts.Runtime.Charts.Renderers.ScaleRenderer focusable="true" name="VerticalScale" style="position: absolute; left: 0; top: 5px; bottom: 50px; width: 50px;" />
+                <UCharts.Runtime.Charts.Renderers.ChartBackgroundRenderer focusable="true" name="ChartBackground" style="position: absolute; left: 50px; right: 5px; top: 5px; bottom: 50px;" />
+                <ui:VisualElement name="ChartContainer" picking-mode="Ignore" style="position: absolute; left: 50px; top: 5px; right: 5px; bottom: 50px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="LegendContainer" style="flex-grow: 1; flex-direction: row;">
+                <UCharts.Runtime.Charts.Renderers.ChartLegend name="ChartLegend" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap; justify-content: space-around;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="RenderersSelectionLayout" style="flex-grow: 1; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;">
+            <ui:Label text="Renderers" display-tooltip-when-elided="true" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

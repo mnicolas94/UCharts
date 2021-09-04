@@ -39,16 +39,16 @@ namespace UCharts.Runtime.Charts.Renderers
         {
             var element = _legendElementAsset.Instantiate();
             var color = element.Q("color");
-            color.style.backgroundColor = new StyleColor(data.Color);
             var label = element.Q<Label>("label");
-            label.text = data.DataName;
             var toggle = element.Q<Toggle>("toggle");
+            
+            color.style.backgroundColor = new StyleColor(data.Color);
+            label.text = data.DataName;
             toggle.value = data.Enabled;
             toggle.RegisterValueChangedCallback((changeEvent) =>
             {
                 data.Enabled = changeEvent.newValue;
                 eventRepaintRequest?.Invoke();
-                Debug.Log($"toggle changed to: {changeEvent.newValue}");
             });
             
             Add(element);

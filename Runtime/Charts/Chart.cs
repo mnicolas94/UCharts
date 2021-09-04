@@ -19,6 +19,7 @@ namespace UCharts.Runtime.Charts
         private ChartLegend _chartLegend;
         
         private VisualElement _renderersContainer;
+        private VisualElement _renderersSelectorsContainer;
         private Dictionary<string, VisualElement> _optionalRenderers;
         
         public Chart()
@@ -30,8 +31,10 @@ namespace UCharts.Runtime.Charts
             uxmlContent.style.flexGrow = 1;
             Add(uxmlContent);
             _renderersContainer = uxmlContent.Q("ChartContainer");
-            
+            _renderersSelectorsContainer = uxmlContent.Q("RenderersSelectionLayout");
+                
             InitializeRenderers();
+            PopulateRenderersSelectors();
             
             _backgroundRenderer.RegisterCallback<WheelEvent>(OnWheel);
             _backgroundRenderer.RegisterCallback<MouseMoveEvent>(OnMouseEvent);
@@ -72,6 +75,7 @@ namespace UCharts.Runtime.Charts
         private void InitializeRenderers()
         {
             _renderers = new List<IDataRenderer>();
+            _optionalRenderers = new Dictionary<string, VisualElement>();
             
             _backgroundRenderer = this.Q<ChartBackgroundRenderer>("ChartBackground");
             _horizontalScale = this.Q<ScaleRenderer>("HorizontalScale");
@@ -84,7 +88,6 @@ namespace UCharts.Runtime.Charts
             lineRenderer.style.right = new StyleLength(Length.Percent(0));
             lineRenderer.style.top = new StyleLength(Length.Percent(0));
             lineRenderer.style.bottom = new StyleLength(Length.Percent(0));
-            lineRenderer.style.flexGrow = 1;
             _renderersContainer.Add(lineRenderer);
             
             var pointsRenderer = new PointsRenderer();
@@ -93,7 +96,6 @@ namespace UCharts.Runtime.Charts
             pointsRenderer.style.right = new StyleLength(Length.Percent(0));
             pointsRenderer.style.top = new StyleLength(Length.Percent(0));
             pointsRenderer.style.bottom = new StyleLength(Length.Percent(0));
-            pointsRenderer.style.flexGrow = 1;
             _renderersContainer.Add(pointsRenderer);
             
             _renderers.Add(_backgroundRenderer);
@@ -106,6 +108,32 @@ namespace UCharts.Runtime.Charts
             foreach (var renderer in _renderers)
             {
                 renderer.SetChartDataReference(_chartData);
+            }
+            
+            _optionalRenderers.Add("Background", _backgroundRenderer);
+            _optionalRenderers.Add("Horizontal Scale", _horizontalScale);
+            _optionalRenderers.Add("Vertical Scale", _verticalScale);
+            _optionalRenderers.Add("Legend", _chartLegend);
+            _optionalRenderers.Add("Lines Renderer", lineRenderer);
+            _optionalRenderers.Add("Points Renderer", pointsRenderer);
+        }
+
+        private void PopulateRenderersSelectors()
+        {
+            foreach (var rendererName in _optionalRenderers.Keys)
+            {
+                var renderer = _optionalRenderers[rendererName];
+                
+                var toggle = new Toggle(rendererName);
+                toggle.value = true;
+                toggle.RegisterValueChangedCallback((changeEvent) =>
+                {
+                    var displayStyle = changeEvent.newValue
+                        ? new StyleEnum<DisplayStyle>(DisplayStyle.Flex)
+                        : new StyleEnum<DisplayStyle>(DisplayStyle.None);
+                    renderer.style.display = displayStyle;
+                });
+                _renderersSelectorsContainer.Add(toggle);
             }
         }
 
