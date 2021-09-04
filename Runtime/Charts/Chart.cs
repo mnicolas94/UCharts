@@ -39,16 +39,13 @@ namespace UCharts.Runtime.Charts
 
         private void AddDataInternal(ChartSingleData singleData)
         {
-            if (!singleData.HasSpecificColor)
-            {
-                singleData.Color = Color.HSVToRGB(Random.value, 1, 1);
-            }
             _chartData.AddData(singleData);
         }
 
         public void AddData(ChartSingleData singleData)
         {
             AddDataInternal(singleData);
+            DistributeColors();
             _chartLegend.UpdateLegend();
             MarkDirtyRepaint();
         }
@@ -58,9 +55,10 @@ namespace UCharts.Runtime.Charts
             foreach (var data in datas)
             {
                 AddDataInternal(data);
-                _chartLegend.UpdateLegend();
-                MarkDirtyRepaint();
             }
+            DistributeColors();
+            _chartLegend.UpdateLegend();
+            MarkDirtyRepaint();
         }
         
         public void ClearData()
@@ -118,6 +116,20 @@ namespace UCharts.Runtime.Charts
             {
                 _chartData.AddZoom();
                 MarkDirtyRepaint();
+            }
+        }
+
+        private void DistributeColors()
+        {
+            int colorNotSpecifiedCount = 0;
+            for (int i = 0; i < _chartData.Count; i++)
+            {
+                var data = _chartData.Data[i];
+                if (!data.HasSpecificColor)
+                {
+                    data.Color = Color.HSVToRGB((float) colorNotSpecifiedCount / _chartData.Count, 1, 1);
+                    colorNotSpecifiedCount++;
+                }
             }
         }
     }
