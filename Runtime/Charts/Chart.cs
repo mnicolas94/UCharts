@@ -128,10 +128,10 @@ namespace UCharts.Runtime.Charts
                 toggle.value = true;
                 toggle.RegisterValueChangedCallback((changeEvent) =>
                 {
-                    var displayStyle = changeEvent.newValue
-                        ? new StyleEnum<DisplayStyle>(DisplayStyle.Flex)
-                        : new StyleEnum<DisplayStyle>(DisplayStyle.None);
-                    renderer.style.display = displayStyle;
+                    var visibilityStyle = changeEvent.newValue
+                        ? new StyleEnum<Visibility>(Visibility.Visible)
+                        : new StyleEnum<Visibility>(Visibility.Hidden);
+                    renderer.style.visibility = visibilityStyle;
                 });
                 _renderersSelectorsContainer.Add(toggle);
             }
