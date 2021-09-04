@@ -42,8 +42,9 @@ namespace UCharts.Runtime.Charts
             var element = _legendElementAsset.Instantiate();
             var color = element.Q("color");
             color.style.backgroundColor = new StyleColor(data.Color);
+            var label = element.Q<Label>("label");
+            label.text = data.DataName;
             var toggle = element.Q<Toggle>("toggle");
-            toggle.label = data.DataName;
             toggle.value = data.Enabled;
             toggle.RegisterValueChangedCallback((changeEvent) =>
             {

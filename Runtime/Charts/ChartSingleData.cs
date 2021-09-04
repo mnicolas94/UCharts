@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -114,7 +115,7 @@ namespace UCharts.Runtime.Charts
             _bounds = new Rect(minX, minY, width, height);
         }
 
-        public static ChartSingleData RandomData(int pointsCount)
+        public static ChartSingleData RandomData(int pointsCount, string dataName="")
         {
             var points = new List<Vector2>();
             float sum = 0;
@@ -124,12 +125,12 @@ namespace UCharts.Runtime.Charts
                 sum += Random.Range(-1, 3);
             }
 
-            return new ChartSingleData(points);
+            return new ChartSingleData(points, dataName);
         }
 
-        public static ChartSingleData RandomData(int pointsCount, Color color)
+        public static ChartSingleData RandomData(int pointsCount, Color color, string dataName="")
         {
-            var data = RandomData(pointsCount);
+            var data = RandomData(pointsCount, dataName);
             data.Color = color;
             return data;
         }

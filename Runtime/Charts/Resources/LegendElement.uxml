@@ -1,6 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <ui:VisualElement name="layout" style="flex-direction: row;">
-        <ui:VisualElement name="color" style="width: 20px; height: 20px; background-color: rgb(236, 1, 1);" />
-        <ui:Toggle label="Toggle" value="false" name="toggle" style="flex-grow: 1;" />
+        <ui:Toggle value="false" name="toggle" style="flex-grow: 0;" />
+        <ui:VisualElement name="color" style="width: 20px; height: 20px; background-color: rgb(236, 1, 1); margin-left: 5px; margin-right: 5px; margin-top: 0; margin-bottom: 0;" />
+        <ui:Label text="Label" display-tooltip-when-elided="true" name="label" style="flex-grow: 1;" />
     </ui:VisualElement>
 </ui:UXML>

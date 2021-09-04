@@ -37,20 +37,37 @@ namespace UCharts.Runtime.Charts
             _chartLegend.eventRepaintRequest += MarkDirtyRepaint;
         }
 
-        public void AddData(ChartSingleData singleData)
+        private void AddDataInternal(ChartSingleData singleData)
         {
             if (!singleData.HasSpecificColor)
             {
                 singleData.Color = Color.HSVToRGB(Random.value, 1, 1);
             }
             _chartData.AddData(singleData);
+        }
+
+        public void AddData(ChartSingleData singleData)
+        {
+            AddDataInternal(singleData);
             _chartLegend.UpdateLegend();
+            MarkDirtyRepaint();
+        }
+
+        public void AddDatas(params ChartSingleData[] datas)
+        {
+            foreach (var data in datas)
+            {
+                AddDataInternal(data);
+                _chartLegend.UpdateLegend();
+                MarkDirtyRepaint();
+            }
         }
         
         public void ClearData()
         {
             _chartData.ClearData();
             _chartLegend.UpdateLegend();
+            MarkDirtyRepaint();
         }
         
         private void InitializeRenderers()
