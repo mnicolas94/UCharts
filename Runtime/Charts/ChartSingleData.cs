@@ -119,7 +119,7 @@ namespace UCharts.Runtime.Charts
         {
             var points = new List<Vector2>();
             float sum = 0;
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < pointsCount; i++)
             {
                 points.Add(new Vector2(i, sum));
                 sum += Random.Range(-1, 3);
