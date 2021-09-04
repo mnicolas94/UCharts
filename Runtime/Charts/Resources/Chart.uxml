@@ -5,9 +5,9 @@
                 <UCharts.Runtime.Charts.Renderers.ScaleRenderer focusable="true" name="HorizontalScale" horizontal="true" style="position: absolute; left: 50px; top: auto; right: 5px; bottom: 0; height: 50px;" />
                 <UCharts.Runtime.Charts.Renderers.ScaleRenderer focusable="true" name="VerticalScale" style="position: absolute; left: 0; top: 5px; bottom: 50px; width: 50px;" />
                 <UCharts.Runtime.Charts.Renderers.ChartBackgroundRenderer focusable="true" name="ChartBackground" style="position: absolute; left: 50px; right: 5px; top: 5px; bottom: 50px;" />
-                <ui:VisualElement name="ChartContainer" picking-mode="Ignore" style="position: absolute; left: 50px; top: 5px; right: 5px; bottom: 50px;" />
+                <ui:VisualElement name="ChartContainer" style="position: absolute; left: 50px; top: 5px; right: 5px; bottom: 50px;" />
             </ui:VisualElement>
-            <ui:VisualElement name="LegendContainer" style="flex-grow: 1; flex-direction: row;">
+            <ui:VisualElement name="LegendContainer" picking-mode="Ignore" style="flex-grow: 1; flex-direction: row;">
                 <UCharts.Runtime.Charts.Renderers.ChartLegend name="ChartLegend" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap; justify-content: space-around;" />
             </ui:VisualElement>
         </ui:VisualElement>

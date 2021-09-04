@@ -36,8 +36,8 @@ namespace UCharts.Runtime.Charts
             InitializeRenderers();
             PopulateRenderersSelectors();
             
-            _backgroundRenderer.RegisterCallback<WheelEvent>(OnWheel);
-            _backgroundRenderer.RegisterCallback<MouseMoveEvent>(OnMouseEvent);
+            _renderersContainer.RegisterCallback<WheelEvent>(OnWheel);
+            _renderersContainer.RegisterCallback<MouseMoveEvent>(OnMouseEvent);
             _chartLegend.eventRepaintRequest += MarkDirtyRepaint;
         }
 
@@ -151,6 +151,7 @@ namespace UCharts.Runtime.Charts
 
         private void OnWheel(WheelEvent evt)
         {
+            Debug.Log("wheel");
             if (evt.delta.y > 0)
             {
                 _chartData.ReduceZoom();
