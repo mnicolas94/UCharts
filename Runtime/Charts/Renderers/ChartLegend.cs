@@ -1,10 +1,8 @@
 ﻿using System;
-using UCharts.Runtime.Charts.Renderers;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace UCharts.Runtime.Charts
+namespace UCharts.Runtime.Charts.Renderers
 {
     public class ChartLegend : VisualElement, IDataRenderer
     {

@@ -19,6 +19,7 @@ namespace UCharts.Runtime.Charts
         private ChartLegend _chartLegend;
         
         private VisualElement _renderersContainer;
+        private Dictionary<string, VisualElement> _optionalRenderers;
         
         public Chart()
         {
@@ -78,14 +79,29 @@ namespace UCharts.Runtime.Charts
             _chartLegend = this.Q<ChartLegend>("ChartLegend");
 
             var lineRenderer = new LineChartRenderer();
+            lineRenderer.style.position = new StyleEnum<Position>(Position.Absolute);
+            lineRenderer.style.left = new StyleLength(Length.Percent(0));
+            lineRenderer.style.right = new StyleLength(Length.Percent(0));
+            lineRenderer.style.top = new StyleLength(Length.Percent(0));
+            lineRenderer.style.bottom = new StyleLength(Length.Percent(0));
             lineRenderer.style.flexGrow = 1;
             _renderersContainer.Add(lineRenderer);
+            
+            var pointsRenderer = new PointsRenderer();
+            pointsRenderer.style.position = new StyleEnum<Position>(Position.Absolute);
+            pointsRenderer.style.left = new StyleLength(Length.Percent(0));
+            pointsRenderer.style.right = new StyleLength(Length.Percent(0));
+            pointsRenderer.style.top = new StyleLength(Length.Percent(0));
+            pointsRenderer.style.bottom = new StyleLength(Length.Percent(0));
+            pointsRenderer.style.flexGrow = 1;
+            _renderersContainer.Add(pointsRenderer);
             
             _renderers.Add(_backgroundRenderer);
             _renderers.Add(_horizontalScale);
             _renderers.Add(_verticalScale);
             _renderers.Add(_chartLegend);
             _renderers.Add(lineRenderer);
+            _renderers.Add(pointsRenderer);
 
             foreach (var renderer in _renderers)
             {

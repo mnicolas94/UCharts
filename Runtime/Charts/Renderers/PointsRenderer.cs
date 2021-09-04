@@ -1,14 +1,15 @@
 ﻿using UnityEditor;
+using UnityEngine;
 using UnityEngine.UIElements;
 using Utils.Runtime.Extensions;
 
 namespace UCharts.Runtime.Charts.Renderers
 {
-    public class LineChartRenderer : ImguiDataRenderer
+    public class PointsRenderer : ImguiDataRenderer
     {
-        public new class UxmlFactory : UxmlFactory<LineChartRenderer>{}
+        public new class UxmlFactory : UxmlFactory<PointsRenderer>{}
 
-        public LineChartRenderer()
+        public PointsRenderer()
         {
             onGUIHandler += OnGui;
         }
@@ -29,20 +30,16 @@ namespace UCharts.Runtime.Charts.Renderers
                 
                 Handles.color = line.Color;
                 var points = line.Points;
-                for (int j = 0; j < points.Count - 1; j++)
+                for (int j = 0; j < points.Count; j++)
                 {
-                    var pointA = points[j];
-                    var pointB = points[j + 1];
-                    bool aInside = pointA.IsInsideRect(dataBounds);
-                    bool bInside = pointB.IsInsideRect(dataBounds);
+                    var point = points[j];
+                    bool insideBounds = point.IsInsideRect(dataBounds);
 
-                    if (aInside && bInside)
+                    if (insideBounds)
                     {
-                        pointA = pointA.RemapBounds(dataBounds, rect);
-                        pointA = pointA.MirrorVertically(rect);
-                        pointB = pointB.RemapBounds(dataBounds, rect);
-                        pointB = pointB.MirrorVertically(rect);
-                        Handles.DrawLine(pointA, pointB);
+                        point = point.RemapBounds(dataBounds, rect);
+                        point = point.MirrorVertically(rect);
+                        Handles.DrawSolidDisc(point, Vector3.back, 3);
                     }
                 }
             }
