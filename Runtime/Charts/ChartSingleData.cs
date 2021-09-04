@@ -6,12 +6,13 @@ using Random = UnityEngine.Random;
 namespace UCharts.Runtime.Charts
 {
     [Serializable]
-    public struct ChartSingleData
+    public class ChartSingleData
     {
         private List<Vector2> _points;
         private string _dataName;
         private Color _color;
         private bool _hasSpecificColor;
+        private bool _enabled;
         
         private Rect _bounds;
 
@@ -39,6 +40,12 @@ namespace UCharts.Runtime.Charts
 
         public bool HasSpecificColor => _hasSpecificColor;
 
+        public bool Enabled
+        {
+            get => _enabled;
+            set => _enabled = value;
+        }
+
         public Rect Bounds => _bounds;
 
         public ChartSingleData(List<Vector2> points, string dataName, Color color)
@@ -47,6 +54,7 @@ namespace UCharts.Runtime.Charts
             _dataName = dataName;
             _color = color;
             _hasSpecificColor = true;
+            _enabled = true;
             _bounds = new Rect();
             RecomputeBounds();
         }
@@ -57,6 +65,7 @@ namespace UCharts.Runtime.Charts
             _dataName = dataName;
             _color = Color.white;
             _hasSpecificColor = false;
+            _enabled = true;
             _bounds = new Rect();
             RecomputeBounds();
         }
@@ -67,6 +76,7 @@ namespace UCharts.Runtime.Charts
             _dataName = dataName;
             _color = color;
             _hasSpecificColor = true;
+            _enabled = true;
             _bounds = new Rect();
             RecomputeBounds();
         }
@@ -77,6 +87,7 @@ namespace UCharts.Runtime.Charts
             _dataName = dataName;
             _color = Color.white;
             _hasSpecificColor = false;
+            _enabled = true;
             _bounds = new Rect();
             RecomputeBounds();
         }

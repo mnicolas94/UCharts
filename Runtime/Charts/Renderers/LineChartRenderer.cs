@@ -25,9 +25,10 @@ namespace UCharts.Runtime.Charts.Renderers
             for (int i = 0; i < curves.Count; i++)
             {
                 var line = curves[i];
-                Handles.color = line.HasSpecificColor ?
-                    line.Color : 
-                    Color.HSVToRGB((float) i / curves.Count, 1, 1);
+                if (!line.Enabled)
+                    continue;
+                
+                Handles.color = line.Color;
                 var points = line.Points;
                 for (int j = 0; j < points.Count - 1; j++)
                 {

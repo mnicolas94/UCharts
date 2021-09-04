@@ -6,5 +6,7 @@
             <ui:VisualElement name="ChartContainer" style="flex-grow: 1;" />
         </UCharts.Runtime.Charts.Renderers.ChartBackgroundRenderer>
     </ui:VisualElement>
-    <ui:VisualElement name="LegendContainer" style="flex-grow: 1;" />
+    <ui:VisualElement name="LegendContainer" style="flex-grow: 1;">
+        <UCharts.Runtime.Charts.ChartLegend name="ChartLegend" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap; justify-content: space-around; padding-left: 10px; padding-right: 10px; padding-top: 10px; padding-bottom: 10px;" />
+    </ui:VisualElement>
 </ui:UXML>

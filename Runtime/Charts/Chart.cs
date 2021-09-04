@@ -16,8 +16,9 @@ namespace UCharts.Runtime.Charts
         private ChartBackgroundRenderer _backgroundRenderer;
         private ScaleRenderer _horizontalScale;
         private ScaleRenderer _verticalScale;
+        private ChartLegend _chartLegend;
+        
         private VisualElement _renderersContainer;
-        private VisualElement _legendContainer;
         
         public Chart()
         {
@@ -33,8 +34,25 @@ namespace UCharts.Runtime.Charts
             
             _backgroundRenderer.RegisterCallback<WheelEvent>(OnWheel);
             _backgroundRenderer.RegisterCallback<MouseMoveEvent>(OnMouseEvent);
+            _chartLegend.eventRepaintRequest += MarkDirtyRepaint;
         }
 
+        public void AddData(ChartSingleData singleData)
+        {
+            if (!singleData.HasSpecificColor)
+            {
+                singleData.Color = Color.HSVToRGB(Random.value, 1, 1);
+            }
+            _chartData.AddData(singleData);
+            _chartLegend.UpdateLegend();
+        }
+        
+        public void ClearData()
+        {
+            _chartData.ClearData();
+            _chartLegend.UpdateLegend();
+        }
+        
         private void InitializeRenderers()
         {
             _renderers = new List<IDataRenderer>();
@@ -42,6 +60,7 @@ namespace UCharts.Runtime.Charts
             _backgroundRenderer = this.Q<ChartBackgroundRenderer>("ChartBackground");
             _horizontalScale = this.Q<ScaleRenderer>("HorizontalScale");
             _verticalScale = this.Q<ScaleRenderer>("VerticalScale");
+            _chartLegend = this.Q<ChartLegend>("ChartLegend");
 
             var lineRenderer = new LineChartRenderer();
             lineRenderer.style.flexGrow = 1;
@@ -50,6 +69,7 @@ namespace UCharts.Runtime.Charts
             _renderers.Add(_backgroundRenderer);
             _renderers.Add(_horizontalScale);
             _renderers.Add(_verticalScale);
+            _renderers.Add(_chartLegend);
             _renderers.Add(lineRenderer);
 
             foreach (var renderer in _renderers)
@@ -82,16 +102,6 @@ namespace UCharts.Runtime.Charts
                 _chartData.AddZoom();
                 MarkDirtyRepaint();
             }
-        }
-        
-        public void AddData(ChartSingleData singleData)
-        {
-            _chartData.AddData(singleData);
-        }
-
-        public void ClearData()
-        {
-            _chartData.ClearData();
         }
     }
 }

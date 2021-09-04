@@ -52,6 +52,8 @@ namespace UCharts.Runtime.Charts
             }
         }
 
+        public int Count => _data.Count;
+
         public ChartData()
         {
             _data = new List<ChartSingleData>();
