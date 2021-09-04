@@ -93,6 +93,17 @@ namespace UCharts.Runtime.Charts
             RecomputeBounds();
         }
         
+        public ChartSingleData(Func<float, Vector2> function, float min, float max, float step, string dataName="")
+        {
+            _points = PointsFromPolarFunction(function, min, max, step);
+            _dataName = dataName;
+            _color = Color.white;
+            _hasSpecificColor = false;
+            _enabled = true;
+            _bounds = new Rect();
+            RecomputeBounds();
+        }
+        
         private void RecomputeBounds()
         {
             float minX = Single.MaxValue;
@@ -142,6 +153,18 @@ namespace UCharts.Runtime.Charts
             {
                 float y = function(x);
                 points.Add(new Vector2(x, y));
+            }
+
+            return points;
+        }
+        
+        private static List<Vector2> PointsFromPolarFunction(Func<float, Vector2> function, float min, float max, float step)
+        {
+            var points = new List<Vector2>();
+            for (float angle = min; angle <= max; angle += step)
+            {
+                var point = function(angle);
+                points.Add(point);
             }
 
             return points;
