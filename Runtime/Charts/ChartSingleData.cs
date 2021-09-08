@@ -104,7 +104,7 @@ namespace UCharts.Runtime.Charts
             RecomputeBounds();
         }
         
-        private void RecomputeBounds()
+        public void RecomputeBounds()
         {
             float minX = Single.MaxValue;
             float maxX = Single.MinValue;

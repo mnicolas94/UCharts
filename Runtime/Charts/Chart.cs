@@ -151,7 +151,6 @@ namespace UCharts.Runtime.Charts
 
         private void OnWheel(WheelEvent evt)
         {
-            Debug.Log("wheel");
             if (evt.delta.y > 0)
             {
                 _chartData.ReduceZoom();
