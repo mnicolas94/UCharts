@@ -90,6 +90,19 @@ namespace UCharts.Runtime.Charts
         {
             Offset += offset;
         }
+
+        public void RecomputeBounds()
+        {
+            Rect[] dataBounds = new Rect[_data.Count];
+            for (int i = 0; i < _data.Count; i++)
+            {
+                var data = _data[i];
+                data.RecomputeBounds();
+                dataBounds[i] = data.Bounds;
+            }
+
+            _bounds = RectContainer(dataBounds);
+        }
         
         private Rect RectContainer(params Rect[] rects)
         {

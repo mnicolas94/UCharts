@@ -71,6 +71,11 @@ namespace UCharts.Runtime.Charts
             _chartLegend.UpdateLegend();
             MarkDirtyRepaint();
         }
+
+        public void RecomputeDataBounds()
+        {
+            _chartData.RecomputeBounds();
+        }
         
         private void InitializeRenderers()
         {
