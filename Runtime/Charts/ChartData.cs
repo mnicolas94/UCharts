@@ -8,9 +8,13 @@ namespace UCharts.Runtime.Charts
     public class ChartData
     {
         private List<ChartSingleData> _data;
+        private ChartDataSpatialHashGrid _hashGrid;
         private Rect _bounds;
         private float _scale;
         private Vector2 _offset;
+
+        private (ChartSingleData, int) _highlightedPoint;
+        private bool _existsHighlightedPoint;
 
         public List<ChartSingleData> Data => _data;
         
@@ -52,11 +56,16 @@ namespace UCharts.Runtime.Charts
             }
         }
 
+        public (ChartSingleData, int) HighlightedPoint => _highlightedPoint;
+
+        public bool ExistsHighlightedPoint => _existsHighlightedPoint;
+
         public int Count => _data.Count;
 
         public ChartData()
         {
             _data = new List<ChartSingleData>();
+            _hashGrid = new ChartDataSpatialHashGrid();
             _bounds = new Rect(0, 0, 0, 0);
             _scale = 1;
             _offset = Vector2.zero;
@@ -64,10 +73,30 @@ namespace UCharts.Runtime.Charts
 
         public void AddData(ChartSingleData singleData)
         {
-            _data.Add(singleData);
-            if (_data.Count == 1)  // if added first data
+            if (_data.Count == 0)  // if there is no data
                 _bounds.Set(0, 0, 0, 0);
+            _data.Add(singleData);
             _bounds = RectContainer(_bounds, singleData.Bounds);
+            _hashGrid.ConstructGrid(_data, _bounds);
+            DistributeColors();
+        }
+        
+        public void AddDatas(params ChartSingleData[] datas)
+        {
+            if (_data.Count == 0)  // if there is no data
+                _bounds.Set(0, 0, 0, 0);
+            var bounds = new Rect[datas.Length + 1];
+            bounds[0] = _bounds;
+            for (int i = 0; i < datas.Length; i++)
+            {
+                var singleData = datas[i];
+                _data.Add(singleData);
+                bounds[i + 1] = singleData.Bounds;
+            }
+
+            _bounds = RectContainer(bounds);
+            _hashGrid.ConstructGrid(_data, _bounds);
+            DistributeColors();
         }
 
         public void ClearData()
@@ -102,6 +131,45 @@ namespace UCharts.Runtime.Charts
             }
 
             _bounds = RectContainer(dataBounds);
+        }
+
+        public void RecomputeSpatialHashGrid()
+        {
+            _hashGrid.ConstructGrid(_data, _bounds);
+        }
+
+        public void HandleClosestPointHighlighting(
+            Vector2 targetPoint, float horizontalDistanceThreshold, float verticalDistanceThreshold)
+        {
+            ((var curve, int pointIndex), float sqrDistance, bool exist) = _hashGrid.GetClosestPoint(targetPoint);
+            if (exist)
+            {
+                var point = curve.Points[pointIndex];
+                var horizontalDistance = Mathf.Abs(point.x - targetPoint.x);
+                var verticalDistance = Mathf.Abs(point.y - targetPoint.y);
+                bool withinHorizontalThreshold = horizontalDistance <= horizontalDistanceThreshold;
+                bool withinVerticalThreshold = verticalDistance <= verticalDistanceThreshold;
+                _highlightedPoint = (curve, pointIndex);
+                _existsHighlightedPoint = withinHorizontalThreshold && withinVerticalThreshold;
+            }
+            else
+            {
+                _existsHighlightedPoint = false;
+            }
+        }
+        
+        private void DistributeColors()
+        {
+            int colorNotSpecifiedCount = 0;
+            for (int i = 0; i < Count; i++)
+            {
+                var data = _data[i];
+                if (!data.HasSpecificColor)
+                {
+                    data.Color = Color.HSVToRGB((float) colorNotSpecifiedCount / Count, 1, 1);
+                    colorNotSpecifiedCount++;
+                }
+            }
         }
         
         private Rect RectContainer(params Rect[] rects)

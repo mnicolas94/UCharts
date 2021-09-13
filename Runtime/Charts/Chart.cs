@@ -2,6 +2,7 @@
 using UCharts.Runtime.Charts.Renderers;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Utils.Runtime.Extensions;
 
 namespace UCharts.Runtime.Charts
 {
@@ -41,26 +42,16 @@ namespace UCharts.Runtime.Charts
             _chartLegend.eventRepaintRequest += MarkDirtyRepaint;
         }
 
-        private void AddDataInternal(ChartSingleData singleData)
-        {
-            _chartData.AddData(singleData);
-        }
-
         public void AddData(ChartSingleData singleData)
         {
-            AddDataInternal(singleData);
-            DistributeColors();
+            _chartData.AddData(singleData);
             _chartLegend.UpdateLegend();
             MarkDirtyRepaint();
         }
 
         public void AddDatas(params ChartSingleData[] datas)
         {
-            foreach (var data in datas)
-            {
-                AddDataInternal(data);
-            }
-            DistributeColors();
+            _chartData.AddDatas(datas);
             _chartLegend.UpdateLegend();
             MarkDirtyRepaint();
         }
@@ -72,9 +63,10 @@ namespace UCharts.Runtime.Charts
             MarkDirtyRepaint();
         }
 
-        public void RecomputeDataBounds()
+        public void RecomputeMetadata()
         {
             _chartData.RecomputeBounds();
+            _chartData.RecomputeSpatialHashGrid();
         }
         
         private void InitializeRenderers()
@@ -144,14 +136,28 @@ namespace UCharts.Runtime.Charts
 
         private void OnMouseEvent(MouseMoveEvent evt)
         {
+            var rect = _backgroundRenderer.contentRect;
+            // handle drag
             if (evt.pressedButtons == 1)
             {
                 var delta = evt.mouseDelta;
-                delta.x = -1 * (delta.x / _backgroundRenderer.contentRect.width) * _chartData.Bounds.width;
-                delta.y = (delta.y / _backgroundRenderer.contentRect.height) * _chartData.Bounds.height;
+                delta.x = -1 * (delta.x / rect.width) * _chartData.Bounds.width;
+                delta.y = (delta.y / rect.height) * _chartData.Bounds.height;
                 _chartData.AddOffset(delta);
                 MarkDirtyRepaint();
             }
+            
+            // handle highlighting
+            var position = evt.localMousePosition;
+            var mirrored = position.MirrorVertically(rect);
+            var remappedPosition = mirrored.RemapBounds(rect, _chartData.Bounds);
+            float pixelsDistanceThreshold = 10;
+            float horizontalDistanceThreshold = pixelsDistanceThreshold / rect.width * _chartData.Bounds.width;
+            float verticalDistanceThreshold = pixelsDistanceThreshold / rect.height * _chartData.Bounds.height;
+            bool previouslyHighlighted = _chartData.ExistsHighlightedPoint;
+            _chartData.HandleClosestPointHighlighting(remappedPosition, horizontalDistanceThreshold, verticalDistanceThreshold);
+            if (_chartData.ExistsHighlightedPoint || previouslyHighlighted)
+                MarkDirtyRepaint();
         }
 
         private void OnWheel(WheelEvent evt)
@@ -165,20 +171,6 @@ namespace UCharts.Runtime.Charts
             {
                 _chartData.AddZoom();
                 MarkDirtyRepaint();
-            }
-        }
-
-        private void DistributeColors()
-        {
-            int colorNotSpecifiedCount = 0;
-            for (int i = 0; i < _chartData.Count; i++)
-            {
-                var data = _chartData.Data[i];
-                if (!data.HasSpecificColor)
-                {
-                    data.Color = Color.HSVToRGB((float) colorNotSpecifiedCount / _chartData.Count, 1, 1);
-                    colorNotSpecifiedCount++;
-                }
             }
         }
     }

@@ -22,14 +22,17 @@ namespace UCharts.Runtime.Charts.Renderers
             var rect = contentRect;
             var curves = DataReference.Data;
             var dataBounds = DataReference.Bounds;
+            
+            // draw points
             for (int i = 0; i < curves.Count; i++)
             {
-                var line = curves[i];
-                if (!line.Enabled)
+                var curve = curves[i];
+                if (!curve.Enabled)
                     continue;
                 
-                Handles.color = line.Color;
-                var points = line.Points;
+                Handles.color = curve.Color;
+                var points = curve.Points;
+                
                 for (int j = 0; j < points.Count; j++)
                 {
                     var point = points[j];
@@ -37,10 +40,26 @@ namespace UCharts.Runtime.Charts.Renderers
 
                     if (insideBounds)
                     {
+                        float radius = 3;
                         point = point.RemapBounds(dataBounds, rect);
                         point = point.MirrorVertically(rect);
-                        Handles.DrawSolidDisc(point, Vector3.back, 3);
+                        Handles.DrawSolidDisc(point, Vector3.back, radius);
                     }
+                }
+            }
+            
+            // draw the highlighted point
+            if (DataReference.ExistsHighlightedPoint)
+            {
+                (var highlightedCurve, int pointIndex) = DataReference.HighlightedPoint;
+                if (highlightedCurve.Enabled)
+                {
+                    Handles.color = highlightedCurve.Color;
+                    var point = highlightedCurve.Points[pointIndex];
+                    float radius = 5;
+                    point = point.RemapBounds(dataBounds, rect);
+                    point = point.MirrorVertically(rect);
+                    Handles.DrawSolidDisc(point, Vector3.back, radius);
                 }
             }
         }
