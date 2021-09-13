@@ -43,14 +43,17 @@ namespace UCharts.Runtime.Charts
                 for (int i = 0; i < cellPoints.Count; i++)
                 {
                     (ChartSingleData curve, int pointIndex) = cellPoints[i];
-                    var curvePoint = curve.Points[pointIndex];
-                    float sqrDistance = Vector2.SqrMagnitude(point - curvePoint);
-                    if (sqrDistance < closestSqrDistance)
+                    if (curve.Enabled)
                     {
-                        closestSqrDistance = sqrDistance;
-                        closestPoint = (curve, pointIndex);
-                        assigned = true;
-                    }
+                        var curvePoint = curve.Points[pointIndex];
+                        float sqrDistance = Vector2.SqrMagnitude(point - curvePoint);
+                        if (sqrDistance < closestSqrDistance)
+                        {
+                            closestSqrDistance = sqrDistance;
+                            closestPoint = (curve, pointIndex);
+                            assigned = true;
+                        }
+                    }    
                 }
             }
 

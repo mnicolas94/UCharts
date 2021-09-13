@@ -18,6 +18,7 @@ namespace UCharts.Runtime.Charts
         private ScaleRenderer _horizontalScale;
         private ScaleRenderer _verticalScale;
         private ChartLegend _chartLegend;
+        private HighlightedValueRenderer _valueRenderer;
         
         private VisualElement _renderersContainer;
         private VisualElement _renderersSelectorsContainer;
@@ -78,6 +79,7 @@ namespace UCharts.Runtime.Charts
             _horizontalScale = this.Q<ScaleRenderer>("HorizontalScale");
             _verticalScale = this.Q<ScaleRenderer>("VerticalScale");
             _chartLegend = this.Q<ChartLegend>("ChartLegend");
+            _valueRenderer = this.Q<HighlightedValueRenderer>("ValueRenderer");
 
             var lineRenderer = new LineChartRenderer();
             lineRenderer.style.position = new StyleEnum<Position>(Position.Absolute);
@@ -99,6 +101,7 @@ namespace UCharts.Runtime.Charts
             _renderers.Add(_horizontalScale);
             _renderers.Add(_verticalScale);
             _renderers.Add(_chartLegend);
+            _renderers.Add(_valueRenderer);
             _renderers.Add(lineRenderer);
             _renderers.Add(pointsRenderer);
 
@@ -111,6 +114,7 @@ namespace UCharts.Runtime.Charts
             _optionalRenderers.Add("Horizontal Scale", _horizontalScale);
             _optionalRenderers.Add("Vertical Scale", _verticalScale);
             _optionalRenderers.Add("Legend", _chartLegend);
+            _optionalRenderers.Add("Pop-up value", _valueRenderer);
             _optionalRenderers.Add("Lines Renderer", lineRenderer);
             _optionalRenderers.Add("Points Renderer", pointsRenderer);
         }

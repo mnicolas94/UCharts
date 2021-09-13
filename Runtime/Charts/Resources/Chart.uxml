@@ -6,13 +6,14 @@
                 <UCharts.Runtime.Charts.Renderers.ScaleRenderer focusable="true" name="VerticalScale" style="position: absolute; left: 0; top: 5px; bottom: 50px; width: 50px;" />
                 <UCharts.Runtime.Charts.Renderers.ChartBackgroundRenderer focusable="true" name="ChartBackground" style="position: absolute; left: 50px; right: 5px; top: 5px; bottom: 50px;" />
                 <ui:VisualElement name="ChartContainer" style="position: absolute; left: 50px; top: 5px; right: 5px; bottom: 50px;" />
+                <UCharts.Runtime.Charts.Renderers.HighlightedValueRenderer focusable="true" name="ValueRenderer" picking-mode="Ignore" style="position: absolute; left: 50px; top: 5px; right: 5px; bottom: 50px;" />
             </ui:VisualElement>
             <ui:VisualElement name="LegendContainer" picking-mode="Ignore" style="flex-grow: 1; flex-direction: row;">
                 <UCharts.Runtime.Charts.Renderers.ChartLegend name="ChartLegend" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap; justify-content: space-around;" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="RenderersSelectionLayout" style="flex-grow: 1; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;">
-            <ui:Label text="Renderers" display-tooltip-when-elided="true" />
+            <ui:Label text="Renderers" display-tooltip-when-elided="true" picking-mode="Ignore" name="ValueRenderer" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
