@@ -166,7 +166,7 @@ namespace UCharts.Runtime.Charts
                 var data = _data[i];
                 if (!data.HasSpecificColor)
                 {
-                    data.Color = Color.HSVToRGB((float) colorNotSpecifiedCount / Count, 1, 1);
+                    data.ColorWithoutSpecifying = Color.HSVToRGB((float) colorNotSpecifiedCount / Count, 1, 1);
                     colorNotSpecifiedCount++;
                 }
             }

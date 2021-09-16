@@ -39,6 +39,11 @@ namespace UCharts.Runtime.Charts
             }
         }
 
+        public Color ColorWithoutSpecifying
+        {
+            set => _color = value;
+        }
+
         public bool HasSpecificColor => _hasSpecificColor;
 
         public bool Enabled
