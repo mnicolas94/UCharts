@@ -29,8 +29,8 @@ namespace UCharts.Runtime.Charts.Renderers
                 var uiPoint = point.RemapBounds(dataBounds, rect).MirrorVertically(rect);
                 uiPoint.y -= 40;
                 
-                string xAxisName = "x";
-                string yAxisName = "y";
+                string xAxisName = DataReference.XAxisName;
+                string yAxisName = DataReference.YAxisName;
                 var guiStyle = GUI.skin.label;
                 guiStyle.alignment = TextAnchor.MiddleCenter;
                 var labelRect = new Rect(uiPoint + new Vector2(-2500, -2500), Vector2.one * 5000);
