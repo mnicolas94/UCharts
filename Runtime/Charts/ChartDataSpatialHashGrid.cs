@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Utils.Runtime.Extensions;
 
 namespace UCharts.Runtime.Charts
 {
@@ -10,7 +11,7 @@ namespace UCharts.Runtime.Charts
         private int _verticalCount;
         private List<(ChartSingleData, int)>[,] _grid;
         private Rect _bounds;
-        
+
         public ChartDataSpatialHashGrid(int horizontalCount = 10, int verticalCount = 10)
         {
             _horizontalCount = horizontalCount;
@@ -26,11 +27,12 @@ namespace UCharts.Runtime.Charts
             }
         }
 
-        public ((ChartSingleData, int), float, bool) GetClosestPoint(Vector2 point)
+        public ((ChartSingleData, int), float, bool) GetClosestPoint(Vector2 uiPoint, Rect uiBounds, Rect dataBounds)
         {
-            var cellIndices = GetContainerCell(point, _bounds);
+            var dataPoint = uiPoint.RemapBounds(uiBounds, dataBounds).MirrorVertically(dataBounds);
+            var cellIndices = GetContainerCell(dataPoint, _bounds);
             var neighborhoodCellsIndices = GetNeighborhood(cellIndices);
-
+            
             bool assigned = false;
             (ChartSingleData, int) closestPoint = (null, -1);
             float closestSqrDistance = Single.MaxValue;
@@ -46,7 +48,9 @@ namespace UCharts.Runtime.Charts
                     if (curve.Enabled)
                     {
                         var curvePoint = curve.Points[pointIndex];
-                        float sqrDistance = Vector2.SqrMagnitude(point - curvePoint);
+                        curvePoint = curvePoint.RemapBounds(dataBounds, uiBounds);
+                        curvePoint = curvePoint.MirrorVertically(uiBounds);
+                        float sqrDistance = Vector2.SqrMagnitude(uiPoint - curvePoint);
                         if (sqrDistance < closestSqrDistance)
                         {
                             closestSqrDistance = sqrDistance;

@@ -19,7 +19,7 @@ namespace UCharts.Runtime.Charts
         private ScaleRenderer _verticalScale;
         private ChartLegend _chartLegend;
         private HighlightedValueRenderer _valueRenderer;
-        
+
         private VisualElement _renderersContainer;
         private VisualElement _renderersSelectorsContainer;
         private Dictionary<string, VisualElement> _optionalRenderers;
@@ -141,25 +141,23 @@ namespace UCharts.Runtime.Charts
         private void OnMouseEvent(MouseMoveEvent evt)
         {
             var rect = _backgroundRenderer.contentRect;
+            var dataBounds = _chartData.Bounds;
             // handle drag
             if (evt.pressedButtons == 1)
             {
                 var delta = evt.mouseDelta;
-                delta.x = -1 * (delta.x / rect.width) * _chartData.Bounds.width;
-                delta.y = (delta.y / rect.height) * _chartData.Bounds.height;
+                delta.x = -1 * (delta.x / rect.width) * dataBounds.width;
+                delta.y = (delta.y / rect.height) * dataBounds.height;
                 _chartData.AddOffset(delta);
                 MarkDirtyRepaint();
             }
             
             // handle highlighting
             var position = evt.localMousePosition;
-            var mirrored = position.MirrorVertically(rect);
-            var remappedPosition = mirrored.RemapBounds(rect, _chartData.Bounds);
             float pixelsDistanceThreshold = 10;
-            float horizontalDistanceThreshold = pixelsDistanceThreshold / rect.width * _chartData.Bounds.width;
-            float verticalDistanceThreshold = pixelsDistanceThreshold / rect.height * _chartData.Bounds.height;
             bool previouslyHighlighted = _chartData.ExistsHighlightedPoint;
-            _chartData.HandleClosestPointHighlighting(remappedPosition, horizontalDistanceThreshold, verticalDistanceThreshold);
+            _chartData.HandleClosestPointHighlighting(position, pixelsDistanceThreshold, rect, dataBounds);
+            
             if (_chartData.ExistsHighlightedPoint || previouslyHighlighted)
                 MarkDirtyRepaint();
         }

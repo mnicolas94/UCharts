@@ -17,7 +17,7 @@ namespace UCharts.Runtime.Charts
         private bool _existsHighlightedPoint;
 
         public List<ChartSingleData> Data => _data;
-        
+
         public Rect Bounds
         {
             get
@@ -138,19 +138,14 @@ namespace UCharts.Runtime.Charts
             _hashGrid.ConstructGrid(_data, _bounds);
         }
 
-        public void HandleClosestPointHighlighting(
-            Vector2 targetPoint, float horizontalDistanceThreshold, float verticalDistanceThreshold)
+        public void HandleClosestPointHighlighting(Vector2 targetPoint, float distanceThreshold, Rect uiBounds, Rect dataBounds)
         {
-            ((var curve, int pointIndex), float sqrDistance, bool exist) = _hashGrid.GetClosestPoint(targetPoint);
-            if (exist)
+            ((var curve, int pointIndex), float sqrDistance, bool exists) = _hashGrid.GetClosestPoint(targetPoint, uiBounds, dataBounds);
+            if (exists)
             {
-                var point = curve.Points[pointIndex];
-                var horizontalDistance = Mathf.Abs(point.x - targetPoint.x);
-                var verticalDistance = Mathf.Abs(point.y - targetPoint.y);
-                bool withinHorizontalThreshold = horizontalDistance <= horizontalDistanceThreshold;
-                bool withinVerticalThreshold = verticalDistance <= verticalDistanceThreshold;
+                bool withinThreshold = sqrDistance <= distanceThreshold * distanceThreshold;
                 _highlightedPoint = (curve, pointIndex);
-                _existsHighlightedPoint = withinHorizontalThreshold && withinVerticalThreshold;
+                _existsHighlightedPoint = withinThreshold;
             }
             else
             {
