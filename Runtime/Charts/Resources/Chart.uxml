@@ -1,6 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <ui:VisualElement name="root" style="flex-grow: 1; flex-direction: row;">
         <ui:VisualElement style="flex-grow: 2;">
+            <UCharts.Runtime.Charts.Renderers.TittleRenderer name="Tittle" style="font-size: 20px; -unity-text-align: middle-center; -unity-font-style: bold;" />
             <ui:VisualElement name="Renderers" style="flex-grow: 5;">
                 <UCharts.Runtime.Charts.Renderers.AxisNameRenderer text="Y axis" name="AxisX" horizontal="true" style="position: absolute; left: 100px; top: auto; right: 5px; bottom: 0; height: 25px; -unity-text-align: middle-center; font-size: 15px; -unity-font-style: bold;" />
                 <UCharts.Runtime.Charts.Renderers.AxisNameRenderer text="Y axis" name="AxisY" horizontal="false" style="position: absolute; left: 0; top: 5px; right: auto; bottom: 50px; -unity-text-align: middle-center; width: 50px; font-size: 15px; -unity-font-style: bold;" />
@@ -15,7 +16,7 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="RenderersSelectionLayout" style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; left: 0;">
-            <ui:Label text="Renderers" display-tooltip-when-elided="true" picking-mode="Ignore" name="ValueRenderer" />
+            <ui:Label text="Renderers" display-tooltip-when-elided="true" picking-mode="Ignore" name="ValueRenderer" style="-unity-text-align: middle-center; font-size: 20px; -unity-font-style: normal;" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

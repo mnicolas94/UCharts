@@ -16,6 +16,7 @@ namespace UCharts.Runtime.Charts
         private List<IDataRenderer> _renderers;
 
         private ChartBackgroundRenderer _backgroundRenderer;
+        private TittleRenderer _tittleRenderer;
         private AxisNameRenderer _xAxisRenderer;
         private AxisNameRenderer _yAxisRenderer;
         private ScaleRenderer _horizontalScale;
@@ -30,7 +31,11 @@ namespace UCharts.Runtime.Charts
         public string Tittle
         {
             get => _chartData.Tittle;
-            set => _chartData.Tittle = value;
+            set
+            {
+                _chartData.Tittle = value;  
+                _tittleRenderer.UpdateText();
+            }
         }
 
         public string XAxisName
@@ -108,6 +113,7 @@ namespace UCharts.Runtime.Charts
             _optionalRenderers = new Dictionary<string, VisualElement>();
             
             _backgroundRenderer = this.Q<ChartBackgroundRenderer>("ChartBackground");
+            _tittleRenderer = this.Q<TittleRenderer>("Tittle");
             _xAxisRenderer = this.Q<AxisNameRenderer>("AxisX");
             _yAxisRenderer = this.Q<AxisNameRenderer>("AxisY");
             _horizontalScale = this.Q<ScaleRenderer>("HorizontalScale");
@@ -132,6 +138,7 @@ namespace UCharts.Runtime.Charts
             _renderersContainer.Add(pointsRenderer);
             
             _renderers.Add(_backgroundRenderer);
+            _renderers.Add(_tittleRenderer);
             _renderers.Add(_xAxisRenderer);
             _renderers.Add(_yAxisRenderer);
             _renderers.Add(_horizontalScale);
@@ -147,6 +154,7 @@ namespace UCharts.Runtime.Charts
             }
             
             _optionalRenderers.Add("Background", _backgroundRenderer);
+            _optionalRenderers.Add("Tittle", _tittleRenderer);
             _optionalRenderers.Add("X axis name", _xAxisRenderer);
             _optionalRenderers.Add("Y axis name", _yAxisRenderer);
             _optionalRenderers.Add("Horizontal Scale", _horizontalScale);
