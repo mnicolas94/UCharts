@@ -7,6 +7,9 @@ namespace UCharts.Runtime.Charts
     [Serializable]
     public class ChartData
     {
+        private string _tittle;
+        private string _xAxisName;
+        private string _yAxisName;
         private List<ChartSingleData> _data;
         private ChartDataSpatialHashGrid _hashGrid;
         private Rect _bounds;
@@ -15,6 +18,24 @@ namespace UCharts.Runtime.Charts
 
         private (ChartSingleData, int) _highlightedPoint;
         private bool _existsHighlightedPoint;
+
+        public string Tittle
+        {
+            get => _tittle;
+            set => _tittle = value;
+        }
+
+        public string XAxisName
+        {
+            get => _xAxisName;
+            set => _xAxisName = value;
+        }
+
+        public string YAxisName
+        {
+            get => _yAxisName;
+            set => _yAxisName = value;
+        }
 
         public List<ChartSingleData> Data => _data;
 
@@ -62,8 +83,11 @@ namespace UCharts.Runtime.Charts
 
         public int Count => _data.Count;
 
-        public ChartData()
+        public ChartData(string tittle = "", string xAxisName = "", string yAxisName = "")
         {
+            _tittle = tittle;
+            _xAxisName = xAxisName;
+            _yAxisName = yAxisName;
             _data = new List<ChartSingleData>();
             _hashGrid = new ChartDataSpatialHashGrid();
             _bounds = new Rect(0, 0, 0, 0);

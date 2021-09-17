@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UCharts.Runtime.Charts.Renderers;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.UIElements;
 using Utils.Runtime.Extensions;
 
@@ -15,6 +16,8 @@ namespace UCharts.Runtime.Charts
         private List<IDataRenderer> _renderers;
 
         private ChartBackgroundRenderer _backgroundRenderer;
+        private AxisNameRenderer _xAxisRenderer;
+        private AxisNameRenderer _yAxisRenderer;
         private ScaleRenderer _horizontalScale;
         private ScaleRenderer _verticalScale;
         private ChartLegend _chartLegend;
@@ -23,6 +26,35 @@ namespace UCharts.Runtime.Charts
         private VisualElement _renderersContainer;
         private VisualElement _renderersSelectorsContainer;
         private Dictionary<string, VisualElement> _optionalRenderers;
+        
+        public string Tittle
+        {
+            get => _chartData.Tittle;
+            set => _chartData.Tittle = value;
+        }
+
+        public string XAxisName
+        {
+            get => _chartData.XAxisName;
+            set
+            {
+                _chartData.XAxisName = value;
+                _xAxisRenderer.UpdateText();
+                _yAxisRenderer.UpdateText();
+            }
+        }
+
+        public string YAxisName
+        {
+            get => _chartData.YAxisName;
+            set
+            {
+                _chartData.YAxisName = value;
+                _xAxisRenderer.UpdateText();
+                _yAxisRenderer.UpdateText();
+            }
+        }
+        
         
         public Chart()
         {
@@ -76,6 +108,8 @@ namespace UCharts.Runtime.Charts
             _optionalRenderers = new Dictionary<string, VisualElement>();
             
             _backgroundRenderer = this.Q<ChartBackgroundRenderer>("ChartBackground");
+            _xAxisRenderer = this.Q<AxisNameRenderer>("AxisX");
+            _yAxisRenderer = this.Q<AxisNameRenderer>("AxisY");
             _horizontalScale = this.Q<ScaleRenderer>("HorizontalScale");
             _verticalScale = this.Q<ScaleRenderer>("VerticalScale");
             _chartLegend = this.Q<ChartLegend>("ChartLegend");
@@ -98,6 +132,8 @@ namespace UCharts.Runtime.Charts
             _renderersContainer.Add(pointsRenderer);
             
             _renderers.Add(_backgroundRenderer);
+            _renderers.Add(_xAxisRenderer);
+            _renderers.Add(_yAxisRenderer);
             _renderers.Add(_horizontalScale);
             _renderers.Add(_verticalScale);
             _renderers.Add(_chartLegend);
@@ -111,6 +147,8 @@ namespace UCharts.Runtime.Charts
             }
             
             _optionalRenderers.Add("Background", _backgroundRenderer);
+            _optionalRenderers.Add("X axis name", _xAxisRenderer);
+            _optionalRenderers.Add("Y axis name", _yAxisRenderer);
             _optionalRenderers.Add("Horizontal Scale", _horizontalScale);
             _optionalRenderers.Add("Vertical Scale", _verticalScale);
             _optionalRenderers.Add("Legend", _chartLegend);

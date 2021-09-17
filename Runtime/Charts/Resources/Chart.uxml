@@ -2,17 +2,19 @@
     <ui:VisualElement name="root" style="flex-grow: 1; flex-direction: row;">
         <ui:VisualElement style="flex-grow: 2;">
             <ui:VisualElement name="Renderers" style="flex-grow: 5;">
-                <UCharts.Runtime.Charts.Renderers.ScaleRenderer focusable="true" name="HorizontalScale" horizontal="true" style="position: absolute; left: 50px; top: auto; right: 5px; bottom: 0; height: 50px;" />
-                <UCharts.Runtime.Charts.Renderers.ScaleRenderer focusable="true" name="VerticalScale" style="position: absolute; left: 0; top: 5px; bottom: 50px; width: 50px;" />
-                <UCharts.Runtime.Charts.Renderers.ChartBackgroundRenderer focusable="true" name="ChartBackground" style="position: absolute; left: 50px; right: 5px; top: 5px; bottom: 50px;" />
-                <ui:VisualElement name="ChartContainer" style="position: absolute; left: 50px; top: 5px; right: 5px; bottom: 50px;" />
-                <UCharts.Runtime.Charts.Renderers.HighlightedValueRenderer focusable="true" name="ValueRenderer" picking-mode="Ignore" style="position: absolute; left: 50px; top: 5px; right: 5px; bottom: 50px;" />
+                <UCharts.Runtime.Charts.Renderers.AxisNameRenderer text="Y axis" name="AxisX" horizontal="true" style="position: absolute; left: 100px; top: auto; right: 5px; bottom: 0; height: 25px; -unity-text-align: middle-center; font-size: 15px; -unity-font-style: bold;" />
+                <UCharts.Runtime.Charts.Renderers.AxisNameRenderer text="Y axis" name="AxisY" horizontal="false" style="position: absolute; left: 0; top: 5px; right: auto; bottom: 50px; -unity-text-align: middle-center; width: 50px; font-size: 15px; -unity-font-style: bold;" />
+                <UCharts.Runtime.Charts.Renderers.ScaleRenderer focusable="true" name="HorizontalScale" horizontal="true" style="position: absolute; left: 100px; top: auto; right: 5px; bottom: 25px; height: 25px;" />
+                <UCharts.Runtime.Charts.Renderers.ScaleRenderer focusable="true" name="VerticalScale" style="position: absolute; left: 50px; top: 5px; bottom: 50px; width: 50px;" />
+                <UCharts.Runtime.Charts.Renderers.ChartBackgroundRenderer focusable="true" name="ChartBackground" style="position: absolute; left: 100px; right: 5px; top: 5px; bottom: 50px;" />
+                <ui:VisualElement name="ChartContainer" style="position: absolute; left: 100px; top: 5px; right: 5px; bottom: 50px;" />
+                <UCharts.Runtime.Charts.Renderers.HighlightedValueRenderer focusable="true" name="ValueRenderer" picking-mode="Ignore" style="position: absolute; left: 100px; top: 5px; right: 5px; bottom: 50px;" />
             </ui:VisualElement>
             <ui:VisualElement name="LegendContainer" picking-mode="Ignore" style="flex-grow: 1; flex-direction: row;">
                 <UCharts.Runtime.Charts.Renderers.ChartLegend name="ChartLegend" style="flex-grow: 1; flex-direction: row; flex-wrap: wrap; justify-content: space-around;" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="RenderersSelectionLayout" style="flex-grow: 1; margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px;">
+        <ui:VisualElement name="RenderersSelectionLayout" style="margin-left: 10px; margin-right: 10px; margin-top: 10px; margin-bottom: 10px; left: 0;">
             <ui:Label text="Renderers" display-tooltip-when-elided="true" picking-mode="Ignore" name="ValueRenderer" />
         </ui:VisualElement>
     </ui:VisualElement>
