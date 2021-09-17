@@ -78,6 +78,13 @@ namespace UCharts.Runtime.Charts
             _renderersContainer.RegisterCallback<WheelEvent>(OnWheel);
             _renderersContainer.RegisterCallback<MouseMoveEvent>(OnMouseEvent);
             _chartLegend.eventRepaintRequest += MarkDirtyRepaint;
+            
+            this.AddManipulator(new ContextualMenuManipulator(OnContextMenu));
+        }
+
+        private void OnContextMenu(ContextualMenuPopulateEvent evt)
+        {
+            evt.menu.AppendAction("Reset offset and zoom", action => _chartData.ResetOffsetScale());
         }
 
         public void AddData(ChartSingleData singleData)
@@ -212,12 +219,22 @@ namespace UCharts.Runtime.Charts
         {
             if (evt.delta.y > 0)
             {
-                _chartData.ReduceZoom();
+                if (evt.ctrlKey)
+                    _chartData.ReduceVerticalZoom();
+                else if (evt.shiftKey)
+                    _chartData.ReduceHorizontalZoom();
+                else
+                    _chartData.ReduceZoom();
                 MarkDirtyRepaint();
             }
             else if (evt.delta.y < 0)
             {
-                _chartData.AddZoom();
+                if (evt.ctrlKey)
+                    _chartData.AddVerticalZoom();
+                else if (evt.shiftKey)
+                    _chartData.AddHorizontalZoom();
+                else
+                    _chartData.AddZoom();
                 MarkDirtyRepaint();
             }
         }

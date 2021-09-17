@@ -13,7 +13,8 @@ namespace UCharts.Runtime.Charts
         private List<ChartSingleData> _data;
         private ChartDataSpatialHashGrid _hashGrid;
         private Rect _bounds;
-        private float _scale;
+        private float _scaleHorizontal;
+        private float _scaleVertical;
         private Vector2 _offset;
 
         private (ChartSingleData, int) _highlightedPoint;
@@ -45,10 +46,10 @@ namespace UCharts.Runtime.Charts
             {
                 Rect transformedBounds = _bounds;
 
-                float extraWidth = transformedBounds.width * (_scale - 1);
-                float extraHeight = transformedBounds.height * (_scale - 1);
-                transformedBounds.width = transformedBounds.width * _scale;
-                transformedBounds.height = transformedBounds.height * _scale;
+                float extraWidth = transformedBounds.width * (_scaleHorizontal - 1);
+                float extraHeight = transformedBounds.height * (_scaleVertical - 1);
+                transformedBounds.width = transformedBounds.width * _scaleHorizontal;
+                transformedBounds.height = transformedBounds.height * _scaleVertical;
                 transformedBounds.x -= extraWidth * 0.5f;
                 transformedBounds.y -= extraHeight * 0.5f;
                 
@@ -59,10 +60,16 @@ namespace UCharts.Runtime.Charts
             }
         }
 
-        public float Scale
+        public float ScaleHorizontal
         {
-            get => _scale;
-            set => _scale = Mathf.Clamp(value, 0.05f, 2);
+            get => _scaleHorizontal;
+            set => _scaleHorizontal = Mathf.Clamp(value, 0.001f, 2);
+        }
+
+        public float ScaleVertical
+        {
+            get => _scaleVertical;
+            set => _scaleVertical = Mathf.Clamp(value, 0.001f, 2);
         }
 
         public Vector2 Offset
@@ -91,7 +98,8 @@ namespace UCharts.Runtime.Charts
             _data = new List<ChartSingleData>();
             _hashGrid = new ChartDataSpatialHashGrid();
             _bounds = new Rect(0, 0, 0, 0);
-            _scale = 1;
+            _scaleHorizontal = 1;
+            _scaleVertical = 1;
             _offset = Vector2.zero;
         }
 
@@ -129,14 +137,43 @@ namespace UCharts.Runtime.Charts
             _bounds.Set(0, 0, 10, 10);
         }
 
+        public void ResetOffsetScale()
+        {
+            _scaleHorizontal = 1;
+            _scaleVertical = 1;
+            _offset = Vector2.zero;
+        }
+        
         public void AddZoom()
         {
-            Scale *= 0.9f;
+            AddHorizontalZoom();
+            AddVerticalZoom();
+        }
+        
+        public void AddHorizontalZoom()
+        {
+            ScaleHorizontal *= 0.9f;
+        }
+        
+        public void AddVerticalZoom()
+        {
+            ScaleVertical *= 0.9f;
         }
 
         public void ReduceZoom()
         {
-            Scale *= 1.1f;
+            ReduceHorizontalZoom();
+            ReduceVerticalZoom();
+        }
+        
+        public void ReduceHorizontalZoom()
+        {
+            ScaleHorizontal *= 1.1f;
+        }
+        
+        public void ReduceVerticalZoom()
+        {
+            ScaleVertical *= 1.1f;
         }
 
         public void AddOffset(Vector2 offset)
