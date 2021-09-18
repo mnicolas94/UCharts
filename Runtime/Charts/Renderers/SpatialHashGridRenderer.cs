@@ -1,7 +1,9 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UIElements;
 using Utils.Runtime.Extensions;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace UCharts.Runtime.Charts.Renderers
 {
@@ -15,9 +17,12 @@ namespace UCharts.Runtime.Charts.Renderers
         
         public SpatialHashGridRenderer()
         {
+#if UNITY_EDITOR
             onGUIHandler += OnGui;
+#endif
         }
 
+#if UNITY_EDITOR
         public void OnGui()
         {
 //            var rect = contentRect;
@@ -68,5 +73,6 @@ namespace UCharts.Runtime.Charts.Renderers
 //                }
 //            }
         }
+#endif
     }
 }

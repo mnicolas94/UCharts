@@ -1,7 +1,9 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UIElements;
 using Utils.Runtime.Extensions;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace UCharts.Runtime.Charts.Renderers
 {
@@ -11,9 +13,11 @@ namespace UCharts.Runtime.Charts.Renderers
 
         public ChartBackgroundRenderer()
         {
+#if UNITY_EDITOR
             onGUIHandler += OnGui;
+#endif
         }
-
+#if UNITY_EDITOR
         private void OnGui()
         {
             if (DataReference == null)
@@ -57,5 +61,6 @@ namespace UCharts.Runtime.Charts.Renderers
             Vector2 rightBottom = new Vector2(right, bottom);
             Handles.DrawPolyLine(leftBottom, rightBottom, rightTop, leftTop, leftBottom);
         }
+#endif
     }
 }

@@ -1,6 +1,8 @@
-﻿using UnityEditor;
-using UnityEngine.UIElements;
+﻿using UnityEngine.UIElements;
 using Utils.Runtime.Extensions;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace UCharts.Runtime.Charts.Renderers
 {
@@ -10,9 +12,12 @@ namespace UCharts.Runtime.Charts.Renderers
 
         public LineChartRenderer()
         {
+#if UNITY_EDITOR
             onGUIHandler += OnGui;
+#endif
         }
 
+#if UNITY_EDITOR
         private void OnGui()
         {
             if (DataReference == null)
@@ -47,5 +52,6 @@ namespace UCharts.Runtime.Charts.Renderers
                 }
             }
         }
+#endif
     }
 }
