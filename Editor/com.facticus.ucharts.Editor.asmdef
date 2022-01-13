@@ -1,5 +1,5 @@
 {
-    "name": "com.thesolarmoose.ucharts.Editor",
+    "name": "com.facticus.ucharts.Editor",
     "references": [],
     "includePlatforms": [
         "Editor"

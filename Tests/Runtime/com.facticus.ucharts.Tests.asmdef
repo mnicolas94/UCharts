@@ -1,7 +1,7 @@
 {
-  "name": "com.thesolarmoose.ucharts.Editor.Tests",
+  "name": "com.facticus.ucharts.Tests",
   "references": [
-    "com.thesolarmoose.ucharts"
+    "com.facticus.ucharts"
   ],
   "optionalUnityReferences": [
     "TestAssemblies"
