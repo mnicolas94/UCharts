@@ -1,18 +1,16 @@
 {
   "name": "com.facticus.ucharts",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "displayName": "UCharts",
   "description": "Small library for plotting data in Unity",
   "unity": "2021.1",
   "unityRelease": "",
-  "dependencies": { },
-  "keywords": [
-    
-  ],
+  "dependencies": {},
+  "keywords": [],
   "author": {
-	  "name": "Facticus",
-	  "email": "",
-	  "url": ""
+    "name": "Facticus",
+    "email": "",
+    "url": ""
   },
   "repository": {
     "type": "git",
