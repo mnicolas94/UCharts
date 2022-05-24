@@ -1,6 +1,6 @@
 {
   "name": "com.facticus.ucharts",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "displayName": "UCharts",
   "description": "Small library for plotting data in Unity",
   "unity": "2021.1",
