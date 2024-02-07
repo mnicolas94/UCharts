@@ -1,5 +1,5 @@
 ﻿using UnityEngine.UIElements;
-using Utils.Runtime.Extensions;
+using Utils.Extensions;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Utils.Runtime.Extensions;
+using Utils.Extensions;
 
 namespace UCharts.Runtime.Charts.Renderers
 {
